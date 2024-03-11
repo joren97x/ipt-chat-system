@@ -9,11 +9,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      sender_id: {
         type: Sequelize.INTEGER
       },
-      message: {
+      receiver_id: {
+        type: Sequelize.INTEGER
+      },
+      content: {
         type: Sequelize.TEXT
+      },
+      is_read: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

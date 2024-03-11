@@ -2,15 +2,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('AccessTokens', {
+    await queryInterface.createTable('Participants', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      token: {
-        type: Sequelize.STRING
+      conversation_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      user_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      is_admin: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -23,8 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('AccessTokens');
+    await queryInterface.dropTable('Participants');
   }
 };
-// chatGPT said if project is small then nah
-// i will store the token in localStorage or some
