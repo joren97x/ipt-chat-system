@@ -14,12 +14,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Message.init({
-    user_id: {
+    sender_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    message: {
+    receiver_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    conversation_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    content: {
       type: DataTypes.TEXT,
+      allowNull: false
+    },
+    is_read: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     }
   }, {

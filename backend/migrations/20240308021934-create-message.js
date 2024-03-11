@@ -13,7 +13,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       receiver_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      conversation_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       content: {
         type: Sequelize.TEXT

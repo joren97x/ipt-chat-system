@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: 1
       }
+    },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   }, {
     sequelize,

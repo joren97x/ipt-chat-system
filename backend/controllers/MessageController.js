@@ -1,34 +1,24 @@
-const { Conversation } = require('../models')
-const { Participant } = require('../models')
+const { Message } = require('../models')
 
-const sendGroupMessage = (req, res) => {
-
-}
-
-const createGroupChat = async (req, res) => {
-    
-    const { user_id, name } = req.body
+const sendMessage = async (req, res) => {
+    const { sender_id, receiver_id, content } = req.body
 
     try {
-        await Conversation.create({name}).then(async (result) => {
-            await Participant.create({ conversation_id: result.id, user_id, is_admin: true }).then(() => {
-                return res.status(201).json({ message: "Group chat created successfully" })
-            })
-            .catch((err) => {
-                return res.status(500).json({ error: err })
-            })
-            
+        await Message.create({ sender_id, receiver_id, content, is_read: 0 }).then(() => {
+            return res.status(201).json({ message: "Message sent successfully" })
         })
-        .catch((err) => {
-            return res.status(500).json({ message: "Server error", err })
+        .catch((error) => {
+            return res.status(500).json({ error })
         })
     }
     catch(err) {
-        console.log(err)
-        return res.status(500).json({ message: "Server error" })
+        return res.status(500).json({ err })
     }
+
 }
 
+
+
 module.exports = {
-    createGroupChat
+    sendMessage
 }
