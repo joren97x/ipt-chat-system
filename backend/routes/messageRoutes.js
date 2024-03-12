@@ -8,6 +8,6 @@ router.post('/create-group-chat', verifyToken, groupChatController.createGroupCh
 router.post('/invite', verifyToken, groupChatController.invite)
 router.post('/send-message-group-chat', verifyToken, messageController.sendGroupMessage)
 router.post('/send-message', verifyToken, messageController.sendMessage)
-router.get('/messages', verifyToken, messageController.index)
+router.get('/messages/:id', verifyToken, messageController.index)
 
 module.exports = router
