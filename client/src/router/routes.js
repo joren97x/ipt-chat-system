@@ -2,12 +2,15 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('../layouts/MainLayout.vue'),
     children: [
-      { path: 'chats', component: () => import('pages/Chats.vue') },
-      { path: 'people', component: () => import('pages/People.vue') },
-      { path: 'login', component: () => import('pages/Login.vue') },
-      { path: 'register', component: () => import('pages/Register.vue') },
+      { path: 'chat', component: () => import('../pages/Chats.vue') },
+      { path: '', component: () => import('../pages/IndexPage.vue') },
+      { path: 'people', component: () => import('../pages/People.vue') },
+      { path: 'login', component: () => import('../pages/Login.vue') },
+      { path: 'register', component: () => import('../pages/Register.vue') },
+      { path: 'about', component: () => import('../pages/About.vue') },
+      { path: 'settings', component: () => import('../pages/Settings.vue') },
     ]
   },
 

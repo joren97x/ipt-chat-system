@@ -1,23 +1,5 @@
 const { Conversation } = require('../models')
 const { Participant } = require('../models')
-const { Message } = require('../models')
-
-const sendGroupMessage = async (req, res) => {
-    const { conversation_id, sender_id, content } = req.body
-
-    try {
-        await Message.create({ conversation_id, sender_id, content, is_read: 0 }).then(() => {
-            return res.status(201).json({ message: "Group chat message sent successfully" })
-        })
-        .catch((error) => {
-            return res.status(500).json({ error })
-        })
-    }
-    catch(err) {
-        return res.status(500).json({ err })
-    }
-
-}
 
 const invite = async (req, res) => {
 
@@ -63,6 +45,5 @@ const createGroupChat = async (req, res) => {
 
 module.exports = {
     createGroupChat,
-    invite,
-    sendGroupMessage
+    invite
 }

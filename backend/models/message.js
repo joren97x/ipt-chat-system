@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     conversation_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false
     },
     content: {
       type: DataTypes.TEXT,

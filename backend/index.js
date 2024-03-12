@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 require('dotenv').config()
 const app = express()
 app.use(express.json())
@@ -6,6 +7,7 @@ const authRoutes = require('./routes/authRoutes.js')
 const messageRoutes = require('./routes/messageRoutes.js')
 const userRoutes = require('./routes/userRoutes.js')
 
+app.use(cors())
 app.use('/api/', authRoutes)
 app.use('/api/', messageRoutes)
 app.use('/api/', userRoutes)
