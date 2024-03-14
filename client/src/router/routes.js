@@ -11,7 +11,8 @@ const routes = [
       { path: 'register', component: () => import('../pages/Register.vue') },
       { path: 'about', component: () => import('../pages/About.vue') },
       { path: 'settings', component: () => import('../pages/Settings.vue') },
-    ]
+    ],
+    meta: { requiresAuth: true },
   },
 
   // Always leave this as last one,

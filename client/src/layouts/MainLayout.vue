@@ -1,7 +1,10 @@
 <script setup>
 
-    import { ref } from 'vue'
     import EssentialLink from 'src/components/EssentialLink.vue'
+    import { useAuthStore } from 'src/stores/auth-store';
+
+    const authStore = useAuthStore()
+
     const linksList = 
     [
         {
@@ -46,7 +49,7 @@
                 </q-item-label>
                 <q-separator></q-separator>
                 <EssentialLink v-for="link in linksList" :key="link.title" :link="link"/>
-                <EssentialLink @click="logout()" :link="logoutLink" />
+                <EssentialLink @click="authStore.logout" :link="logoutLink" />
             </q-list>
             
         </q-drawer>

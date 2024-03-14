@@ -3,23 +3,25 @@
     import { ref, onMounted } from 'vue'
     import { api } from 'src/boot/axios'
     import { formatDistance, formatDistanceToNow } from 'date-fns'
+    import { useAuthStore } from 'src/stores/auth-store.js'
+    import { useChatStore } from 'src/stores/chat-store.js'
 
     const newGroupDialog = ref(false)
     const selectedChat = ref(null)
     const chats = ref([])
+    const chatStore = useChatStore()
+    const authStore = useAuthStore()
 
     onMounted(() => {
-        api.get('/messages/1', {
+        api.get(`/messages/${authStore.auth.id}`, {
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImpvcmVuIiwibmFtZSI6ImpvcmVuIiwicGFzc3dvcmQiOiIkMmIkMTAkSC5OVHJNTGRCLk40VkVZTTJHczBuT1dYd0hKajJqVWFQZGZxbzN2blJDWHRVUVJtNkpUWnEiLCJjcmVhdGVkQXQiOiIyMDI0LTAzLTEwVDExOjQxOjIzLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTAzLTEwVDExOjQxOjIzLjAwMFoifSwiaWF0IjoxNzEwMDczODE1fQ.NjtWsqStKIAftZCXMoGRna787kjQpY5krj-LcZFq3qk',
-                'Accept': 'application/json'
+                'Authorization': `Bearer ${authStore.getToken}`
             }
         }).then((result) => {
             chats.value = result.data.groupedMessages
             console.log(result)
-        })
-        .catch((err) => {
-            console.error(err)
+        }).catch((err) => {
+            console.log(err)
         })
     })
 
@@ -32,6 +34,7 @@
                 <q-scroll-area style="height: 100vh; max-width: 100%;">
                     <q-list title="People">
                         <q-item>
+                            {{ authStore.getToken }}
                             <q-item-section>
                                 <q-item-label lines="1">Chats</q-item-label>
                             </q-item-section>
@@ -51,7 +54,7 @@
                             </q-item-section>
                         </q-item>
                         <q-separator/>
-                        <q-item v-for="chat in chats" :key="chat.id" clickable v-ripple @click="selectedChat = chat">
+                        <q-item v-for="chat in chats" :key="chat.id" clickable v-ripple @click="chatStore.selectChat(chat)">
                             <q-item-section top avatar>
                                 <q-avatar color="primary" text-color="white" icon="face" />
                             </q-item-section>
@@ -94,7 +97,7 @@
 
                     <q-scroll-area style="height: 70vh; max-width: 100vw;" class="q-px-lg q-py-sm">
                         <q-chat-message 
-                            v-for="message in selectedChat" 
+                            v-for="message in chatStore.selectedChat" 
                             :key="message.id"
                             :bg-color="message.sender_id === 1 ? 'primary' : 'secondary'"
                             :stamp="formatDistanceToNow(message.createdAt)"

@@ -1,6 +1,5 @@
 <script setup>
 
-    import { api } from 'src/boot/axios'
     import { reactive } from 'vue'
     import { useAuthStore } from '../stores/auth-store.js'
 
