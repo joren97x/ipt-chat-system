@@ -12,10 +12,6 @@ module.exports = {
       sender_id: {
         type: Sequelize.INTEGER
       },
-      receiver_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
       conversation_id: {
         type: Sequelize.INTEGER,
         allowNull: true

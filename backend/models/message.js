@@ -15,16 +15,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'conversation_id',
         as: 'conversation' // Alias to access the association
       });
+      Message.belongsTo(models.User, {
+        foreignKey: 'sender_id',
+        as: 'sender'
+      })
     }
   }
   Message.init({
     sender_id: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-    receiver_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
     },
     conversation_id: {
       type: DataTypes.INTEGER,
