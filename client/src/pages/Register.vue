@@ -1,18 +1,34 @@
 <script setup>
 
     import { api } from 'src/boot/axios'
-    import { reactive } from 'vue'
+    import { reactive, ref } from 'vue'
     import { useAuthStore } from '../stores/auth-store.js'
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter()
     const authStore = useAuthStore()
     const form = reactive({
         username: null,
         name: null,
         password: null
     })
+    const error = ref(null)
 
     function onSubmit() {
-        authStore.register(form)
+        api.post('/register', form).then((result) => {
+            console.log(result)
+            if(result.status == 201) {
+                authStore.setToken(result.data.token)
+                authStore.setAuth(result.data.user)
+                localStorage.setItem('auth', JSON.stringify(result.data.user))
+                localStorage.setItem('token', JSON.stringify(result.data.token))
+                router.push('/')
+            }  
+        })
+        .catch((err) => {
+            console.log(err)
+            error.value = err.response.data.message
+        })
     }
 
 </script>
@@ -39,8 +55,8 @@
                                 v-model="form.username"
                                 label="Username"
                                 lazy-rules
-                                :error-message="authStore.error"
-                                :error="authStore.error ? true : false"
+                                :error-message="error"
+                                :error="error ? true : false"
                                 :rules="[ val => val && val.length > 0 || 'Please type something']"
                             />
                             <q-input
@@ -48,8 +64,8 @@
                                 v-model="form.name"
                                 label="Name"
                                 lazy-rules
-                                :error-message="authStore.error"
-                                :error="authStore.error ? true : false"
+                                :error-message="error"
+                                :error="error ? true : false"
                                 :rules="[ val => val && val.length > 0 || 'Please type something']"
                             />
                             <q-input
